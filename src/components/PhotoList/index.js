@@ -108,7 +108,7 @@ const PhotoList = ({ category }) => {
     const toggleModal = (image, i) => {
         //current photo using Hooks. Pass current photo as prop in modal component
         setCurrentPhoto({...image, index: i});
-        setIsModalOpen(true);
+        setIsModalOpen(!isModalOpen);
     }
 
     return (
