@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-// import Modal from '../Modal';
+import Modal from '../Modal';
 
 const PhotoList = ({ category }) => {
+    //false because only want the modal to open if image is clicked
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPhoto, setCurrentPhoto] = useState();
 
     const [photos] = useState([
         {
@@ -102,15 +105,23 @@ const PhotoList = ({ category }) => {
     ]);
 
     const currentPhotos = photos.filter((photo) => photo.category === category);
+    const toggleModal = (image, i) => {
+        //current photo using Hooks. Pass current photo as prop in modal component
+        setCurrentPhoto({...image, index: i});
+        setIsModalOpen(true);
+    }
 
     return (
       <div>
+          {isModalOpen && (
+          <Modal onClose={toggleModal} currentPhoto={currentPhoto} />)}
         <div className="flex-row">
           {currentPhotos.map((image, i) => (
             <img
               src={require(`../../assets/small/${category}/${i}.jpg`)}
               alt={image.name}
               className="img-thumbnail mx-1"
+              onClick={() => toggleModal(image, i)}
               key={image.name}
             />
           ))}
